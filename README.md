@@ -7,6 +7,8 @@ Our team is responsible for all advanced analytics, machine learning and data sc
 
 We will always have room for talented and skilled data engineering professionals. If you are interested in joining our team, complete this test and send the repository's link to `rudison dot lacerda at raizen dot com` or apply for an opening in our [portal](https://vagas.raizen.com.br).
 
+**Access the [ANP Fuel Sales ETL Test](https://github.com/raizen-analytics/data-engineering-test/blob/master/TEST.md).**
+
 ## About Raízen
 
 ![Raízen Logo](./rz.png)
