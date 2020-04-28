@@ -9,7 +9,7 @@ This test consists in developing an ETL pipeline to extract internal pivot cache
 
 This `xls` file has some pivot tables like this one:
 
-![Pivot Table](./pivot.png)
+![Pivot Table](./images/pivot.png)
 
 The developed pipeline is meant to extract and structure the underlying data of two of these tables:
 - Sales of oil derivative fuels by UF and product

@@ -11,7 +11,7 @@ We will always have room for talented and skilled data engineering professionals
 
 ## About Raízen
 
-![Raízen Logo](./rz.png)
+![Raízen Logo](./images/raizen.png)
 
 **Raízen is an integrated energy company.**
 
