@@ -15,7 +15,7 @@ We will always have room for talented and skilled data engineering professionals
 
 **Raízen is an integrated energy company.**
 
-We are among the largest private business groups in Brazil and out team is our biggest differential: around 29k employees and 15k business partners thoughout the country.
+We are among the largest private business groups in Brazil and our team is our biggest differential: around 29k employees and 15k business partners thoughout the country.
 
 Originating in Brazil, we also work in Argentina and we have the ambition to win the world. We propel the people and the country with energy solutions. Energy is our business, and is in our name.
 
