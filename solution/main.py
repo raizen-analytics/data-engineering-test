@@ -1,9 +1,17 @@
-import json, extractor, transform
+# -*- coding: utf-8 -*-
+
+### Import Section
+
+# Python built-in modules
+import json,
+
+# Project modules
+import extractor, transform
+
 # 3rd part modules
 import logging
 
-from pprint import pprint
-
+### Code Section
 logging.basicConfig(level=logging.INFO, format='%(asctime)s :: %(levelname)s :: %(message)s')
 
 def importConfig(self):
