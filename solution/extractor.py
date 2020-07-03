@@ -5,4 +5,5 @@ class Extractor(object):
         self.url = url
 
     def extract(self):
-        return requests.get(self.url)
+        response = requests.get(self.url)
+        return response.content
