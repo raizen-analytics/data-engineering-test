@@ -3,7 +3,7 @@
                              "diesel": "Vendas, pelas distribuidoras¹, dos derivados combustíveis de petróleo por Unidade da Federação e produto - 2000-2020 (m3)"}
              },
   "database": { "name": "sales",
-                "deafultSchema": {  "year_month": "date",
+                "defaultSchema": {  "year_month": "date",
                                     "uf": "string",
                                     "product": "string",
                                     "unit": "string",
