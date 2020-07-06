@@ -29,12 +29,11 @@ class Database(object):
         cursor.close()
         return response
 
-    def insert(self, table, values=None):
-        insertQuery = 'INSERT INTO {0} VALUES ({1})'
-        values = ['\'2020_Janeiro\'','\'SP\'','\'OLEO\'','\'m3\'','\'1000\'','\'2020\'']
-        insertQuery = insertQuery.format(table,','.join(values))
+    def insert(self, table, fields, values):
+        insertQuery = 'INSERT INTO {0} ({1}) VALUES ({2})'
+        insertQuery = insertQuery.format(table,','.join(fields),','.join(len(fields)*'?'))
         cursor = self.conn.cursor()
-        cursor.execute(insertQuery)
+        cursor.executemany(insertQuery, values)
         self.conn.commit()
         cursor.close()
 
