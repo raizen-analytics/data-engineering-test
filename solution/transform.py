@@ -36,6 +36,8 @@ class Transform(object):
 
     def run(self):
         for key in self.keyWords:
+            logging.info('started parsing and loading {0} sheet'.format(key))
+            self.currentKey = key
             df = pandas.ExcelFile('files/{0}Sales.xls'.format(key))
             sheets = df.sheet_names
             for sheet in sheets:
