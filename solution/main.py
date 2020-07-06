@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s :: %(levelname)s :: 
 
 class Raizen(object):
     def __init__(self):
+        logging.info('app started')
         self.configs = self.importConfigs()
         self.url = self.configs['wrapper']['url']
         self.keyWords = self.configs['wrapper']['keyWords']
@@ -22,15 +23,20 @@ class Raizen(object):
     def importConfigs(self):
         with open("config.json", encoding='utf-8') as file:
             return json.load(file)
+        logging.info('configs imported')
 
     def downloadSheet(self):
+        logging.info('sheet downloaded started')
         response = requests.get(self.url)
         content = response.content
+        logging.info('sheet downloaded finished')
         for key in self.keyWords:
             with open('files/{0}Sales.xls'.format(key), 'wb') as file:
                 file.write(content)
+            logging.info('{0} created'.format(fileName))
 
     def getPivotSourceData(self):
+        logging.info('pivot source data extraction started')
         app = xlwings.App(visible=False)
         app.display_alerts = False
         vba = xlwings.Book('files/vbas.xlsm')
@@ -43,6 +49,7 @@ class Raizen(object):
 
         apps = xlwings.apps.active
         apps.quit()
+        logging.info('pivot source data extraction finished')
 
     def startDB(self):
         db = database.Database(self.configs)
@@ -61,6 +68,7 @@ class Raizen(object):
         # self.startDB()
         self.prepareData()
         # trs.show()
+        logging.info('app finished')
 
 # if __file__ == "__main__":
 r = Raizen()
