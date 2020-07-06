@@ -13,26 +13,22 @@ class Transform(object):
         dfsRaw = df.parse(sheet)
         dfs = dfsRaw.dropna(axis=1, how='all')
         for index, row in dfs.iterrows():
-            uf = row['ESTADO']
-            if not uf in self.dataDict:
-                self.dataDict[uf] = {}
-            self.aggregateMonth(uf, row)
-        self.loadData()
+            self.buildDocs(row)
 
-    def aggregateMonth(self, uf, row):
+    def buildDocs(self, row):
         rowMonths = [month for month in self.months if row.get(month)]
+        docs = []
         for month in rowMonths:
-            self.dataDict[uf]['unit'] = row['UNIDADE']
-            self.dataDict[uf]['product'] = row['COMBUSTÍVEL']
-            self.dataDict[uf]['year_month'] = str(row['ANO']) + '_' + month
-            self.dataDict[uf]['volume'] = row[month]
-            if math.isnan(row[month]):
-                self.dataDict[uf]['volume'] = 0
-            self.dataDict[uf]['created_at'] = datetime.now()
-
-    def loadData(self):
-        pprint(self.dataDict)
-        del self.dataDict
+            doc = {}
+            doc['uf'] = row['ESTADO']
+            doc['unit'] = row['UNIDADE']
+            doc['product'] = row['COMBUSTÍVEL']
+            doc['year_month'] = str(row['ANO']) + '_' + month
+            doc['volume'] = row[month]
+            doc['created_at'] = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M:%S')
+            docs.append(list(doc.values()))
+        keys = ['uf', 'unit', 'product', 'year_month', 'volume', 'created_at']
+        self.db.insert(self.currentKey, keys, tuple(docs))
 
     def run(self):
         for key in self.keyWords:
