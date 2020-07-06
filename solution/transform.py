@@ -6,7 +6,9 @@ class Transform(object):
     def __init__(self, db, keyWords):
         self.db = db
         self.keyWords = keyWords
-        self.months = ['Jan', 'Fev','Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+        self.months = {'Jan': 'Jan', 'Fev': 'Feb', 'Mar': 'Mar', 'Abr': 'Apr',
+                       'Mai': 'May', 'Jun': 'Jun', 'Jul': 'Jul', 'Ago': 'Aug',
+                       'Set': 'Sep', 'Out': 'Oct', 'Nov': 'Nov', 'Dez': 'Dec'}
 
     def parseSheet(self, df, sheet):
         self.dataDict = {}
@@ -18,14 +20,14 @@ class Transform(object):
     def buildDocs(self, row):
         rowMonths = [month for month in self.months if row.get(month)]
         docs = []
-        for month in rowMonths:
+        for month in self.months:
             doc = {}
             doc['uf'] = row['ESTADO']
             doc['unit'] = row['UNIDADE']
             doc['product'] = row['COMBUSTÍVEL']
-            doc['year_month'] = str(row['ANO']) + '_' + month
+            doc['year_month'] = datetime.strptime(str(row['ANO']) + self.months[month], '%Y%b')
             doc['volume'] = row[month]
-            doc['created_at'] = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M:%S')
+            doc['created_at'] = datetime.now()
             docs.append(list(doc.values()))
         keys = ['uf', 'unit', 'product', 'year_month', 'volume', 'created_at']
         self.db.insert(self.currentKey, keys, tuple(docs))
