@@ -2,7 +2,7 @@
 
 ### Import Section
 # Python built-in modules
-import os, json, sys, sqlite3
+import json, sqlite3
 
 # Project modules
 import transform, database
@@ -31,7 +31,8 @@ class Raizen(object):
         content = response.content
         logging.info('sheet downloaded finished')
         for key in self.keyWords:
-            with open('files/{0}Sales.xls'.format(key), 'wb') as file:
+            fileName = '{0}Sales.xls'.format(key)
+            with open('files/{0}'.format(fileName), 'wb') as file:
                 file.write(content)
             logging.info('{0} created'.format(fileName))
 
@@ -52,24 +53,21 @@ class Raizen(object):
         logging.info('pivot source data extraction finished')
 
     def startDB(self):
-        db = database.Database(self.configs)
-        db.createDB()
-        db.insert('oil')
-        db.truncate('oil')
-        db.select('oil')
+        self.db = database.Database(self.configs)
+        self.db.createDB()
+        for key in self.keyWords:
+            self.db.truncate(key)
 
-    def prepareData(self):
-        trs = transform.Transform(data,self.keyWords)
-        trs.getPivotTables()
+    def prepareLoadData(self):
+        trs = transform.Transform(self.db,self.keyWords)
+        trs.run()
 
     def run(self):
-        # self.downloadSheet()
-        # self.getPivotSourceData()
-        # self.startDB()
-        self.prepareData()
-        # trs.show()
+        self.downloadSheet()
+        self.getPivotSourceData()
+        self.startDB()
+        self.prepareLoadData()
         logging.info('app finished')
 
-# if __file__ == "__main__":
 r = Raizen()
 r.run()
