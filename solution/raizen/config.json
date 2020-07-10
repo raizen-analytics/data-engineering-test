@@ -1,0 +1,13 @@
+{ "wrapper": { "url": "http://www.anp.gov.br/arquivos/dados-estatisticos/vendas-combustiveis/vendas-combustiveis-m3.xls",
+               "keyWords": { "oil": "Vendas, pelas distribuidoras¹, de óleo diesel por tipo e Unidade da Federação - 2013-2020 (m3)",
+                             "diesel": "Vendas, pelas distribuidoras¹, dos derivados combustíveis de petróleo por Unidade da Federação e produto - 2000-2020 (m3)"}
+             },
+  "database": { "name": "sales",
+                "defaultSchema": {  "year_month": "date",
+                                    "uf": "string",
+                                    "product": "string",
+                                    "unit": "string",
+                                    "volume": "double",
+                                    "created_at": "timestamp"}
+              }
+}
