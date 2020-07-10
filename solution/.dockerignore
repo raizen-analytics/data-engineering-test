@@ -1,1 +1,5 @@
 .git
+files
+*.md
+docker-airflow
+__*
