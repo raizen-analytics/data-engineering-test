@@ -75,8 +75,6 @@ COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 RUN mkdir -p /raizen
 COPY raizen/* /raizen/
 
-# COPY requirements.txt /requirements.txt
-
 RUN chown -R airflow: ${AIRFLOW_USER_HOME} /raizen
 
 EXPOSE 8080

@@ -1,3 +1,12 @@
+### RUNNING
+
+> git clone git@github.com:valvesss/data-engineering-test.git
+> cd data-engineering-test/solution
+> docker build -t raizen .
+> docker run -d -p 8080:8080 raizen webserver
+
+In your browser, search for localhost:8080 and have fun!
+
 # Solution To-Be
 
 ## Phase 1
@@ -24,11 +33,11 @@ default schema with columns names and types - for SQL instances.
 
 ## Extraction
 
-- downloadSheet
+- fetch_data
 
-One simple definition using the requests lib to get the url and write to a file.
+One simple definition using the requests lib to get the url and write to a file. CURRENTLY using regular files (brazilian site took down)
 
-- getPivotSourceData
+- getPivotSourceData [DEPRECATED]
 
 A definition that uses xlwings lib to open the excel sheets as well as a macro
 sheet. Once they are opened (currently in quiet/invisible mode), two macros run,
@@ -94,5 +103,13 @@ I cast the big list as tuple and load them to the database.
 
 Thats some points to improve performance, security and error-checking. But its
 ready to be managed by orchestration and containerization tools.
+
+### TL;DR
+
+The code was rebased and renewed, spent many time coding... soon i will doc :)
+
+## Want to help?
+
+Fork, PR and document.
 
 KISS and hack the planet.
