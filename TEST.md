@@ -3,7 +3,7 @@ ANP Fuel Sales ETL Test
 
 This test consists in developing an ETL pipeline to extract internal pivot caches from consolidated reports [made available](http://www.anp.gov.br/dados-estatisticos) by Brazilian government's regulatory agency for oil/fuels, *ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis)*.
 
-**The raw file can be found [here](http://www.anp.gov.br/arquivos/dados-estatisticos/vendas-combustiveis/vendas-combustiveis-m3.xls).** 
+**The raw file can be found [here](https://github.com/raizen-analytics/data-engineering-test/raw/master/assets/vendas-combustiveis-m3.xls).** 
 
 ## Goal
 
