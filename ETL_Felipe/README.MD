@@ -21,10 +21,10 @@ Data should be stored in the following format:
 3. Created two python codes. One with all the main functions we'll be using. And other one containing our dag.
 
 4. The dag consists of 3 tasks.
-  - extract_load - that loads data from pivot tables and transforms it into a usable csv format
-  - transform_oleos - that transforms data from our previously created csv file into the user requested table format and then into a parquet file for 'oleos'.All Data 
+  >- extract_load - that loads data from pivot tables and transforms it into a usable csv format
+  >- transform_oleos - that transforms data from our previously created csv file into the user requested table format and then into a parquet file for 'oleos'.All Data 
    is validates against original df in order to maintain file and data consistency
-  - transform_diesel - that transforms data from our previously created csv file into the user requested table format and then into a parquet file for 'diesel'.All 
+  >- transform_diesel - that transforms data from our previously created csv file into the user requested table format and then into a parquet file for 'diesel'.All 
    Data is validates against original df in order to maintain file and data consistency
   
 ## Things I could improve as time goes on
