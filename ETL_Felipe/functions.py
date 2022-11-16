@@ -82,5 +82,4 @@ def transform_data(table):
 
     transformed_df['created_at'] = pd.to_datetime('today')
 
-    #Validate data if its correct
 
