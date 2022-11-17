@@ -1,0 +1,6 @@
+fastparquet==0.8.3
+numpy==1.23.2
+pandas==1.4.4
+pyarrow==9.0.0
+xlrd==2.0.1
+xmltodict==0.13.0
