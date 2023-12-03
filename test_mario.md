@@ -50,7 +50,7 @@ data.createOrReplaceTempView("tmp_data")
 
 data = spark.sql("select * from tmp_data limit 188")
 
-## criando tabela sales_petroleum_derived_fuels
+## criando tabela sales_petroleum_derived_fuels (Sales of oil derivative fuels by UF and product)
 
 spark.sql('''
   CREATE TABLE IF NOT EXISTS sales_petroleum_derived_fuels (
