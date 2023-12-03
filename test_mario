@@ -95,5 +95,10 @@ data.write.mode("overwrite").saveAsTable(base_sales)
 desc sales_petroleum_derived_fuels;
 ![image](https://github.com/msap89/data-engineering-test/assets/152655536/67e11d92-5b17-4ecf-9232-a916a9882075)
 
+# Criacao da 
+#condicao para trazer somente Diesel
+diesel = data.where(col("product") == "ÓLEO DIESEL (m3)")
 
+#salvando o dataframe diesel com table name sales_diesel
+data.write.mode("overwrite").saveAsTable('sales_diesel')
 
