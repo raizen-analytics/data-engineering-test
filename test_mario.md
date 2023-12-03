@@ -12,11 +12,11 @@ data = spark.read.format(file_type) \
   .option("sep", ";") \
   .load(file_location, skiprows = 54)
 
-# COMMAND ----------
+#selecionando range de colunas ----------
 
 data = data.select('_c1','_c2','_c3','_c4','_c5','_c6','_c7','_c8','_c9','_c10','_c11','_c12','_c13','_c14','_c15','_c16','_c17','_c18','_c19','_c20','_c21','_c22', '_c23')
 
-# COMMAND ----------
+#renomeando as colunas ----------
 
 data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[1],"product")
@@ -42,15 +42,15 @@ data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[21], "2019")
 			.withColumnRenamed(data.columns[22], "2020"))
 
-# COMMAND ----------
+#criando uma temp view ----------
 
 data.createOrReplaceTempView("tmp_data")
 
-# COMMAND ----------
+#carregando dataframe data com limit e ter somente o que importa no dataframe ----------
 
 data = spark.sql("select * from tmp_data limit 188")
 
-# COMMAND ----------
+#criando tabela sales_petroleum_derived_fuels ----------
 
 spark.sql('''
   CREATE TABLE IF NOT EXISTS sales_petroleum_derived_fuels (
@@ -63,11 +63,11 @@ spark.sql('''
   )
 ''')
 
-# COMMAND ----------
+#logica do agrupamento e unpivot ----------
 
 from pyspark.sql.functions import expr, col, sum
 
-#definicao table name
+##definicao table name
 base_sales = "sales_petroleum_derived_fuels"
 
 #lista de colunas que não devem ser despivotada
