@@ -1,4 +1,3 @@
-# Databricks notebook source
 ## base location and type
 file_location = "/FileStore/tables/raw/vendas_combustiveis_m3.csv"
 file_type = "csv"
@@ -12,11 +11,11 @@ data = spark.read.format(file_type) \
   .option("sep", ";") \
   .load(file_location, skiprows = 54)
 
-## selecionando range de colunas
+## selecting column range
 
 data = data.select('_c1','_c2','_c3','_c4','_c5','_c6','_c7','_c8','_c9','_c10','_c11','_c12','_c13','_c14','_c15','_c16','_c17','_c18','_c19','_c20','_c21','_c22', '_c23')
 
-## renomeando as colunas
+## renaming the columns
 
 data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[1],"product")
@@ -42,15 +41,15 @@ data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[21], "2019")
 			.withColumnRenamed(data.columns[22], "2020"))
 
-## criando uma temp view
+## creating a temp view
 
 data.createOrReplaceTempView("tmp_data")
 
-## carregando dataframe data com limit e ter somente o que importa no dataframe
+## loading dataframe data with limit and having only what matters in the dataframe
 
 data = spark.sql("select * from tmp_data limit 188")
 
-## criando tabela sales_petroleum_derived_fuels (Sales of oil derivative fuels by UF and product)
+## creating table sales_petroleum_derived_fuels (Sales of oil derivative fuels by UF and product)
 
 spark.sql('''
   CREATE TABLE IF NOT EXISTS sales_petroleum_derived_fuels (
@@ -63,30 +62,30 @@ spark.sql('''
   )
 ''')
 
-## logica do agrupamento e unpivot
+## grouping and unpivot logic
 
 from pyspark.sql.functions import expr, col, sum
 
-### definicao table name
+### table name definition
 base_sales = "sales_petroleum_derived_fuels"
 
-### lista de colunas que não devem ser despivotada
+### list of columns that should not be unpivoted
 non_melt_columns = ["uf", "product"]
 
-### despivot nas colunas de ano em linhas
+### unpivot on year columns in rows
 df_melted = data.selectExpr(*non_melt_columns, 
                           "stack(22, " + ", ".join([f"'{col_name}', {col_name}" for col_name in data.columns if col_name not in non_melt_columns]) + ") as (year_month, total_volume)")
 
-### adicionando a coluna year_month
+### adding the year_month column
 df_with_year_month = df_melted.withColumn("year_month", col("year_month").cast("date"))
 
-### agrupando por uf, product, unit, year_month e calculando a soma da coluna volume
+### grouping by uf, product, unit, year_month and calculating the sum of the volume column
 df_aggregated = df_with_year_month.groupBy("uf", "product", "unit", "year_month").agg(sum("total_volume").alias("volume"))
 
-### selecionando as colunas desejadas
+### selecting the desired columns
 data = df_aggregated.select("year_month", "uf", "product", "unit", "volume", "created_at")
 
-### salvando o DataFrame na tabela no Databricks
+### saving Dataframe to table in Databricks
 data.write.mode("overwrite").saveAsTable(base_sales)
 
 ## describe column
@@ -95,9 +94,9 @@ data.write.mode("overwrite").saveAsTable(base_sales)
 desc sales_petroleum_derived_fuels;
 ![image](https://github.com/msap89/data-engineering-test/assets/152655536/67e11d92-5b17-4ecf-9232-a916a9882075)
 
-## Criacao da table sales_diesel 
+## Table creation sales_diesel (Sales of diesel by UF and type)
 
-### criando tabela sales_petroleum_derived_fuels ----------
+### Table creation sales_petroleum_derived_fuels
 
 spark.sql('''
   CREATE TABLE IF NOT EXISTS sales_diesel (
@@ -110,9 +109,9 @@ spark.sql('''
   )
 ''')
 
-### condicao para trazer somente Diesel
+### condition to bring only Diesel
 diesel = data.where(col("product") == "ÓLEO DIESEL (m3)")
 
-### salvando o dataframe diesel com table name sales_diesel
+### saving the diesel dataframe with table name sales_diesel
 data.write.mode("overwrite").saveAsTable('sales_diesel')
 
