@@ -12,11 +12,11 @@ data = spark.read.format(file_type) \
   .option("sep", ";") \
   .load(file_location, skiprows = 54)
 
-#selecionando range de colunas ----------
+# selecionando range de colunas
 
 data = data.select('_c1','_c2','_c3','_c4','_c5','_c6','_c7','_c8','_c9','_c10','_c11','_c12','_c13','_c14','_c15','_c16','_c17','_c18','_c19','_c20','_c21','_c22', '_c23')
 
-#renomeando as colunas ----------
+# renomeando as colunas
 
 data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[1],"product")
@@ -42,15 +42,15 @@ data = (data.withColumnRenamed(data.columns[0], "uf")
 			.withColumnRenamed(data.columns[21], "2019")
 			.withColumnRenamed(data.columns[22], "2020"))
 
-#criando uma temp view ----------
+# criando uma temp view
 
 data.createOrReplaceTempView("tmp_data")
 
-#carregando dataframe data com limit e ter somente o que importa no dataframe ----------
+# carregando dataframe data com limit e ter somente o que importa no dataframe
 
 data = spark.sql("select * from tmp_data limit 188")
 
-#criando tabela sales_petroleum_derived_fuels ----------
+# criando tabela sales_petroleum_derived_fuels
 
 spark.sql('''
   CREATE TABLE IF NOT EXISTS sales_petroleum_derived_fuels (
@@ -63,11 +63,11 @@ spark.sql('''
   )
 ''')
 
-#logica do agrupamento e unpivot ----------
+# logica do agrupamento e unpivot
 
 from pyspark.sql.functions import expr, col, sum
 
-##definicao table name
+#definicao table name
 base_sales = "sales_petroleum_derived_fuels"
 
 #lista de colunas que não devem ser despivotada
@@ -89,13 +89,27 @@ data = df_aggregated.select("year_month", "uf", "product", "unit", "volume", "cr
 #salvando o DataFrame na tabela no Databricks
 data.write.mode("overwrite").saveAsTable(base_sales)
 
-# COMMAND ----------
+# describe column
 
 %sql
 desc sales_petroleum_derived_fuels;
 ![image](https://github.com/msap89/data-engineering-test/assets/152655536/67e11d92-5b17-4ecf-9232-a916a9882075)
 
-# Criacao da 
+# Criacao da table sales_diesel 
+
+#criando tabela sales_petroleum_derived_fuels ----------
+
+spark.sql('''
+  CREATE TABLE IF NOT EXISTS sales_diesel (
+    year_month DATE,
+    uf STRING,
+    product STRING,
+    unit STRING,
+    volume DOUBLE,
+    created_at TIMESTAMP
+  )
+''')
+
 #condicao para trazer somente Diesel
 diesel = data.where(col("product") == "ÓLEO DIESEL (m3)")
 
